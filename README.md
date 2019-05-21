@@ -2,7 +2,7 @@
     <a href="https://github.com/yiisoft" target="_blank">
         <!--<img src="https://avatars0.githubusercontent.com/u/993323" height="100px">-->
     </a>
-    <h1 align="center">Escuela de idiomas headway</h1>
+    <h1 align="center">Metis</h1>
     <br>
 </p>
 
@@ -58,7 +58,7 @@ Now you should be able to access the application through the following URL, assu
 directly under the Web root.
 
 ~~~
-http://localhost/proyecthw/web/
+http://localhost/pmetis/web/
 ~~~
 
 ### Install from an Archive File
@@ -78,7 +78,7 @@ Set cookie validation key in `config/web.php` file to some random secret string:
 You can then access the application through the following URL:
 
 ~~~
-http://localhost/proyecthw/web/
+http://localhost/pmetis/web/
 ~~~
 
 
