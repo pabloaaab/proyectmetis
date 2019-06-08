@@ -26,23 +26,23 @@ $sql = "SELECT COUNT(ticket_id) FROM ost_ticket WHERE topic_id = 13 AND status_i
 $rs = mysqli_query($conexion,$sql);
 $inc_recibidas = mysqli_fetch_array($rs);
 
-//inclusiones columan gestionadas
-$etiqueta = '{"status":[3,"Cerrado"]}';
-//cerradas
-$sql = "SELECT COUNT(id) FROM ost_thread_event WHERE topic_id = 13 AND state = 'closed' AND ost_thread_event.data LIKE '%$etiqueta%' AND ost_thread_event.timestamp >= '$fechadia' AND ost_thread_event.timestamp <= NOW()";
+//inclusiones columana gestionadas
+$etiqueta = '{"status":8}';
+//gestionadas por Metis
+$sql = "SELECT COUNT(id) FROM ost_thread_event WHERE topic_id = 13 AND ost_thread_event.data LIKE '%$etiqueta%' AND ost_thread_event.timestamp >= '$fechadia' AND ost_thread_event.timestamp <= NOW()";
 $rs = mysqli_query($conexion,$sql);
 $rggc = mysqli_fetch_array($rs);
 //devuelta uno
-$etiqueta2 = '{"fields":{"75":["0","1"]}';
-$sql = "SELECT COUNT(id) FROM ost_thread_event WHERE topic_id = 13 AND state = 'edited' AND ost_thread_event.data LIKE '%$etiqueta2%' AND ost_thread_event.timestamp >= '$fechadia' AND ost_thread_event.timestamp <= NOW()";
-$rs = mysqli_query($conexion,$sql);
-$rggd1 = mysqli_fetch_array($rs);
+//$etiqueta2 = '{"fields":{"75":["0","1"]}';
+//$sql = "SELECT COUNT(id) FROM ost_thread_event WHERE topic_id = 13 AND state = 'edited' AND ost_thread_event.data LIKE '%$etiqueta2%' AND ost_thread_event.timestamp >= '$fechadia' AND ost_thread_event.timestamp <= NOW()";
+//$rs = mysqli_query($conexion,$sql);
+//$rggd1 = mysqli_fetch_array($rs);
 //devuelta dos
-$etiqueta3 = '{"fields":{"77":["0","1"]}';
-$sql = "SELECT COUNT(id) FROM ost_thread_event WHERE topic_id = 13 AND state = 'edited' AND ost_thread_event.data LIKE '%$etiqueta3%' AND ost_thread_event.timestamp >= '$fechadia' AND ost_thread_event.timestamp <= NOW()";
-$rs = mysqli_query($conexion,$sql);
-$rggd2 = mysqli_fetch_array($rs);
-$inc_gestionadas = $rggc[0] + $rggd1[0] + $rggd2[0];
+//$etiqueta3 = '{"fields":{"77":["0","1"]}';
+//$sql = "SELECT COUNT(id) FROM ost_thread_event WHERE topic_id = 13 AND state = 'edited' AND ost_thread_event.data LIKE '%$etiqueta3%' AND ost_thread_event.timestamp >= '$fechadia' AND ost_thread_event.timestamp <= NOW()";
+//$rs = mysqli_query($conexion,$sql);
+//$rggd2 = mysqli_fetch_array($rs);
+$inc_gestionadas = $rggc[0]; //+ $rggd1[0] + $rggd2[0];
 
 //inclusiones columan pendientes finalizando el dia
 $pendientes_fin_dia = $pendientes_dia_anterior[0] + ($inc_recibidas[0] - $inc_gestionadas);
@@ -56,11 +56,11 @@ $sql = "SELECT COUNT(id) FROM ost_thread_event WHERE topic_id = 13 AND state = '
 $rs = mysqli_query($conexion,$sql);
 $rggd3 = mysqli_fetch_array($rs);
 //devuelta dos
-$etiqueta5 = '{"fields":{"77":["0","1"]}';
-$sql = "SELECT COUNT(id) FROM ost_thread_event WHERE topic_id = 13 AND state = 'edited' AND ost_thread_event.data LIKE '%$etiqueta5%' AND ost_thread_event.timestamp >= '$fechadia' AND ost_thread_event.timestamp <= NOW()";
-$rs = mysqli_query($conexion,$sql);
-$rggd4 = mysqli_fetch_array($rs);
-$inc_dev_p_d_a = $rggd3[0] + $rggd4[0];
+//$etiqueta5 = '{"fields":{"77":["0","1"]}';
+//$sql = "SELECT COUNT(id) FROM ost_thread_event WHERE topic_id = 13 AND state = 'edited' AND ost_thread_event.data LIKE '%$etiqueta5%' AND ost_thread_event.timestamp >= '$fechadia' AND ost_thread_event.timestamp <= NOW()";
+//$rs = mysqli_query($conexion,$sql);
+//$rggd4 = mysqli_fetch_array($rs);
+$inc_dev_p_d_a = $rggd3[0]; //+ $rggd4[0];
 
 // Fila 3
 
@@ -74,10 +74,21 @@ $etiqueta6 = '{"fields":{"76":["0","1"]}';
 $sql = "SELECT COUNT(id) FROM ost_thread_event WHERE topic_id = 13 AND state = 'edited' AND ost_thread_event.data LIKE '%$etiqueta6%' AND ost_thread_event.timestamp >= '$fechadia' AND ost_thread_event.timestamp <= NOW()";
 $rs = mysqli_query($conexion,$sql);
 $reproceso_recib = mysqli_fetch_array($rs);
+//reproceso dos
+$etiqueta7 = '{"fields":{"78":["0","1"]}';
+$sql = "SELECT COUNT(id) FROM ost_thread_event WHERE topic_id = 13 AND state = 'edited' AND ost_thread_event.data LIKE '%$etiqueta7%' AND ost_thread_event.timestamp >= '$fechadia' AND ost_thread_event.timestamp <= NOW()";
+$rs = mysqli_query($conexion,$sql);
+$reproceso_recib2 = mysqli_fetch_array($rs);
+//reproceso tres
+$etiqueta8 = '{"fields":{"80":["0","1"]}';
+$sql = "SELECT COUNT(id) FROM ost_thread_event WHERE topic_id = 13 AND state = 'edited' AND ost_thread_event.data LIKE '%$etiqueta8%' AND ost_thread_event.timestamp >= '$fechadia' AND ost_thread_event.timestamp <= NOW()";
+$rs = mysqli_query($conexion,$sql);
+$reproceso_recib3 = mysqli_fetch_array($rs);
+$reproceso_recibidos = $reproceso_recib[0] + $reproceso_recib2[0] + $reproceso_recib3[0];
 
-$reproceso_gestionadas = $rggc[0] + $rggd3[0] + $rggd4[0] + $reproceso_recib[0];
+$reproceso_gestionadas = $rggc[0] + $reproceso_recibidos;
 
-$reproceso_p_f_d = $reproceso_inc_p_d_a[0] + $reproceso_recib[0] - $reproceso_gestionadas;
+$reproceso_p_f_d = $reproceso_inc_p_d_a[0] + $reproceso_recibidos - $reproceso_gestionadas;
 
 // Fila 4
 
@@ -87,13 +98,21 @@ $rs = mysqli_query($conexion,$sql);
 $reproceso_inc_dev_p_d_a = mysqli_fetch_array($rs);
 
 //reproceso de inclusiones devueltas columna recibidas
-$etiqueta7 = '{"fields":{"78":["0","1"]}';
-$sql = "SELECT COUNT(id) FROM ost_thread_event WHERE topic_id = 13 AND state = 'edited' AND ost_thread_event.data LIKE '%$etiqueta7%' AND ost_thread_event.timestamp >= '$fechadia' AND ost_thread_event.timestamp <= NOW()";
+//devolucion 2
+$etiqueta9 = '{"fields":{"77":["0","1"]}';
+$sql = "SELECT COUNT(id) FROM ost_thread_event WHERE topic_id = 13 AND state = 'edited' AND ost_thread_event.data LIKE '%$etiqueta9%' AND ost_thread_event.timestamp >= '$fechadia' AND ost_thread_event.timestamp <= NOW()";
 $rs = mysqli_query($conexion,$sql);
-$reproceso_inc_dev_recib = mysqli_fetch_array($rs);
+$reproceso_inc_dev_recib2 = mysqli_fetch_array($rs);
+//devolucion 3
+$etiqueta10 = '{"fields":{"79":["0","1"]}';
+$sql = "SELECT COUNT(id) FROM ost_thread_event WHERE topic_id = 13 AND state = 'edited' AND ost_thread_event.data LIKE '%$etiqueta10%' AND ost_thread_event.timestamp >= '$fechadia' AND ost_thread_event.timestamp <= NOW()";
+$rs = mysqli_query($conexion,$sql);
+$reproceso_inc_dev_recib3 = mysqli_fetch_array($rs);
+$reproceso_devoluciones = $reproceso_inc_dev_recib2[0] + $reproceso_inc_dev_recib3[0];
+
 
 // Insercion de los resultados
-$sql = "insert into reporte(inc_recibida_p_d_a,inc_recibida,inc_recibida_g,inc_recibida_p_f_d,inc_dev_p_d_a,rep_inc_p_d_a,rep_inc_recibida,rep_inc_g,rep_inc_p_f_d,rep_inc_dev_p_d_a,rep_inc_dev_recibida) values ('$pendientes_dia_anterior[0]','$inc_recibidas[0]','$inc_gestionadas','$pendientes_fin_dia','$inc_dev_p_d_a','$reproceso_inc_p_d_a[0]',$reproceso_recib[0],$reproceso_gestionadas,$reproceso_p_f_d,$reproceso_inc_dev_p_d_a[0],$reproceso_inc_dev_recib[0])";
+$sql = "insert into reporte(inc_recibida_p_d_a,inc_recibida,inc_recibida_g,inc_recibida_p_f_d,inc_dev_p_d_a,rep_inc_p_d_a,rep_inc_recibida,rep_inc_g,rep_inc_p_f_d,rep_inc_dev_p_d_a,rep_inc_dev_recibida) values ('$pendientes_dia_anterior[0]','$inc_recibidas[0]','$inc_gestionadas','$pendientes_fin_dia','$inc_dev_p_d_a','$reproceso_inc_p_d_a[0]',$reproceso_recibidos,$reproceso_gestionadas,$reproceso_p_f_d,$reproceso_inc_dev_p_d_a[0],$reproceso_devoluciones)";
 $rs = mysqli_query($conexion,$sql);
 
 ?>
