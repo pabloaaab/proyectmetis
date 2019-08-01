@@ -58,7 +58,7 @@ Now you should be able to access the application through the following URL, assu
 directly under the Web root.
 
 ~~~
-http://localhost/pmetis/web/
+http://localhost/proyectmetis/web/
 ~~~
 
 ### Install from an Archive File
@@ -78,7 +78,7 @@ Set cookie validation key in `config/web.php` file to some random secret string:
 You can then access the application through the following URL:
 
 ~~~
-http://localhost/pmetis/web/
+http://localhost/proyectmetis/web/
 ~~~
 
 

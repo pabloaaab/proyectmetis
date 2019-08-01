@@ -44,6 +44,12 @@ if (!Yii::$app->user->isGuest) {
         'items' => [
             //['label' => 'Inicio', 'url' => ['/site/index']],                        
             [
+                'label' => 'Administracion',
+                'items' => [
+                    ['label' => 'Proceso', 'url' => ['/proceso/index']],                    
+                ]
+            ],
+            [
                 'label' => 'Utilidades',
                 'items' => [
                     ['label' => 'Consultas', 'url' => ['/consultas/index']],                    
@@ -62,13 +68,13 @@ if (!Yii::$app->user->isGuest) {
         echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-center'],
         'items' => [
-            //['label' => 'Inicio', 'url' => ['/site/index']],                        
+            //['label' => 'Inicio', 'url' => ['/site/index']],                                    
             [
                 'label' => 'Utilidades',
                 'items' => [
                     ['label' => 'Consultas', 'url' => ['/consultas/index']],                    
                 ]
-            ],                        
+            ],
             /*[                
                 'label' => 'Configuración',
                 'items' => [
