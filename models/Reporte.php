@@ -10,6 +10,7 @@ use Yii;
  * @property int $id_reporte
  * @property int $id_cliente
  * @property int $id_proceso
+ * @property int $fecha_proceso
  *
  * @property Cliente $cliente
  * @property Proceso $proceso
@@ -31,6 +32,7 @@ class Reporte extends \yii\db\ActiveRecord
     {
         return [
             [['id_cliente', 'id_proceso'], 'integer'],
+            [['fecha_proceso'], 'date'],
             [['id_cliente'], 'exist', 'skipOnError' => true, 'targetClass' => Cliente::className(), 'targetAttribute' => ['id_cliente' => 'id_cliente']],
             [['id_proceso'], 'exist', 'skipOnError' => true, 'targetClass' => Proceso::className(), 'targetAttribute' => ['id_proceso' => 'id_proceso']],
         ];
@@ -42,9 +44,10 @@ class Reporte extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_reporte' => 'Id Reporte',
-            'id_cliente' => 'Id Cliente',
-            'id_proceso' => 'Id Proceso',
+            'id_reporte' => 'Id',
+            'id_cliente' => 'Cliente',
+            'id_proceso' => 'Proceso',
+            'fecha_proceso' => 'Fecha Proceso',
         ];
     }
 

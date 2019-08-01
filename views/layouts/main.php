@@ -52,7 +52,7 @@ if (!Yii::$app->user->isGuest) {
             [
                 'label' => 'Utilidades',
                 'items' => [
-                    ['label' => 'Consultas', 'url' => ['/consultas/index']],                    
+                    ['label' => 'Reporte', 'url' => ['/reporte/index']],                    
                 ]
             ],                        
             /*[                
@@ -72,7 +72,7 @@ if (!Yii::$app->user->isGuest) {
             [
                 'label' => 'Utilidades',
                 'items' => [
-                    ['label' => 'Consultas', 'url' => ['/consultas/index']],                    
+                    ['label' => 'Reporte', 'url' => ['/reporte/index']],                    
                 ]
             ],
             /*[                

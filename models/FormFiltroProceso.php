@@ -10,20 +10,20 @@ use yii\base\Model;
  */
 class FormFiltroProceso extends Model
 {
-    public $q;
+    public $buscar;
 
     public function rules()
     {
         return [
 
-            ['q', 'match', 'pattern' => '/^[a-z0-9\s]+$/i', 'message' => 'Sólo se aceptan numeros y letras'],
+            ['buscar', 'match', 'pattern' => '/^[a-z0-9\s]+$/i', 'message' => 'Sólo se aceptan numeros y letras'],
         ];
     }
 
     public function attributeLabels()
     {
         return [
-            'q' => 'Buscar:',
+            'buscar' => 'Buscar:',
         ];
     }
 }
