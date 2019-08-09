@@ -2,8 +2,7 @@
 
 namespace app\controllers;
 
-use app\models\FormFiltroReporte;
-use app\models\Reporte;
+use app\models\FormFiltroCliente;
 use app\models\Cliente;
 use Codeception\Lib\HelperModule;
 use yii;
@@ -24,24 +23,27 @@ use PHPExcel;
 
 
 
-class ReporteController extends Controller {
+class ClienteController extends Controller {
 
     public function actionIndex() {
         if (!Yii::$app->user->isGuest) {
-            $form = new FormFiltroReporte;            
+            $form = new FormFiltroCliente;            
             $placa = null;
-            $fecha_enviado = null;
-            $id_proceso = null;            
+            $email = null;
+            $nombres = null; 
+            $apellidos = null; 
             if ($form->load(Yii::$app->request->get())) {
                 if ($form->validate()) {                    
                     $placa = Html::encode($form->placa);
-                    $fecha_enviado = Html::encode($form->fecha_enviado);
-                    $id_proceso = Html::encode($form->id_proceso);                                        
-                    $table = Reporte::find()                                                        
+                    $email = Html::encode($form->email);
+                    $nombres = Html::encode($form->nombres);
+                    $apellidos = Html::encode($form->apellidos);                                        
+                    $table = Cliente::find()                                                        
                             ->andFilterWhere(['like', 'placa', $placa])
-                            ->andFilterWhere(['like', 'fecha_enviado', $fecha_enviado])
-                            ->andFilterWhere(['like', 'id_proceso', $id_proceso])                            
-                            ->orderBy('fecha_enviado desc');
+                            ->andFilterWhere(['like', 'email', $email])
+                            ->andFilterWhere(['like', 'nombres', $nombres])                            
+                            ->andFilterWhere(['like', 'apellidos', $apellidos])                            
+                            ->orderBy('id_cliente desc');
                     $count = clone $table;
                     $pages = new Pagination([
                         'pageSize' => 20,
@@ -56,19 +58,19 @@ class ReporteController extends Controller {
                 }
                 
                 if(isset($_POST['excel'])){
-                    $table = Reporte::find()                                                        
+                    $table = Cliente::find()                                                        
                             ->andFilterWhere(['like', 'placa', $placa])
-                            ->andFilterWhere(['like', 'fecha_enviado', $fecha_enviado])
-                            ->andFilterWhere(['like', 'id_proceso', $id_proceso])                            
-                            ->orderBy('fecha_enviado desc');
+                            ->andFilterWhere(['like', 'email', $email])
+                            ->andFilterWhere(['like', 'nombres', $nombres])                            
+                            ->andFilterWhere(['like', 'apellidos', $apellidos])                            
+                            ->orderBy('id_cliente desc');
                     
                     $model = $table->all();
                     $this->actionExcel($model);                    
                 }
             } else {
-                $table = Reporte::find()
-                        ->where(['=','id_reporte',0])
-                        ->orderBy('fecha_enviado desc');
+                $table = Cliente::find()                        
+                        ->orderBy('id_cliente desc');
                 $count = clone $table;
                 $pages = new Pagination([
                     'pageSize' => 20,
@@ -93,8 +95,7 @@ class ReporteController extends Controller {
         }
     }
     
-    public function actionExcel($model) {
-        //$costoproducciondiario = CostoProduccionDiaria::find()->all();
+    public function actionExcel($model) {        
         $objPHPExcel = new \PHPExcel();
         // Set document properties
         $objPHPExcel->getProperties()->setCreator("EMPRESA")
@@ -119,30 +120,30 @@ class ReporteController extends Controller {
         $objPHPExcel->setActiveSheetIndex(0)
                     ->setCellValue('A1', 'Id')
                     ->setCellValue('B1', 'Cliente')
-                    ->setCellValue('C1', 'Proceso')
-                    ->setCellValue('D1', 'Fecha Proceso')
-                    ->setCellValue('E1', 'Tema')
-                    ->setCellValue('F1', 'Placa');
+                    ->setCellValue('C1', 'Email')
+                    ->setCellValue('D1', 'Placa')
+                    ->setCellValue('E1', 'Telefono_1')
+                    ->setCellValue('F1', 'Direccion_1');
 
         $i = 2;
         
         foreach ($model as $val) {                                    
             $objPHPExcel->setActiveSheetIndex(0)
-                    ->setCellValue('A' . $i, $val->id_reporte)
-                    ->setCellValue('B' . $i, $val->cliente->nombre_completo)
-                    ->setCellValue('C' . $i, $val->proceso->proceso)
-                    ->setCellValue('D' . $i, $val->fecha_enviado)
-                    ->setCellValue('E' . $i, $val->tema)
-                    ->setCellValue('F' . $i, $val->placa);
+                    ->setCellValue('A' . $i, $val->id_cliente)
+                    ->setCellValue('B' . $i, $val->nombre_completo)
+                    ->setCellValue('C' . $i, $val->email)
+                    ->setCellValue('D' . $i, $val->placa)
+                    ->setCellValue('E' . $i, $val->telefono_1)
+                    ->setCellValue('F' . $i, $val->direccion_1);
             $i++;
         }
 
-        $objPHPExcel->getActiveSheet()->setTitle('Reporte');
+        $objPHPExcel->getActiveSheet()->setTitle('Clientes');
         $objPHPExcel->setActiveSheetIndex(0);
 
         // Redirect output to a client’s web browser (Excel2007)
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="Reporte.xlsx"');
+        header('Content-Disposition: attachment;filename="Clientes.xlsx"');
         header('Cache-Control: max-age=0');
         // If you're serving to IE 9, then the following may be needed
         header('Cache-Control: max-age=1');
@@ -165,23 +166,6 @@ class ReporteController extends Controller {
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
-    }
-    
-    public function actionImprimir($id)
-    {
-                                
-        return $this->render('../formato/carta', [
-            'model' => $this->findModel($id),
-            
-        ]);
     }        
-
-    public function actionVer($id) {
-        
-        return $this->renderAjax('carta', [
-                    'model' => $this->findModel($id),                    
-        ]);
-    
-    }
 
 }

@@ -19,7 +19,7 @@ class FormFiltroUsuarios extends Model
     {
         return [
 
-            ['username', 'match', 'pattern' => '/^[0-9\s]+$/i', 'message' => 'Sólo se aceptan numeros'],
+            ['username', 'default'],
             ['nombrecompleto', 'match', 'pattern' => '/^[a-záéíóúñ0-9\s]+$/i', 'message' => 'Sólo se aceptan numeros y letras'],
             ['perfil', 'default'],
             ['sede', 'default'],

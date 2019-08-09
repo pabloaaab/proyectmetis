@@ -11,13 +11,13 @@ use kartik\date\DatePicker;
 use yii\helpers\ArrayHelper;
 use moonland\phpexcel\Excel;
 
-$this->title = 'Reporte Notificaciones';
+$this->title = 'Clientes';
 ?>
 
-<h1>Reporte Notificaciones</h1>
+<h1>Clientes</h1>
 <?php $formulario = ActiveForm::begin([
     "method" => "get",
-    "action" => Url::toRoute("reporte/index"),
+    "action" => Url::toRoute("cliente/index"),
     "enableClientValidation" => true,
     'options' => ['class' => 'form-horizontal'],
     'fieldConfig' => [
@@ -27,10 +27,6 @@ $this->title = 'Reporte Notificaciones';
                 ],
 
 ]);
-?>
-
-<?php
-$proceso = ArrayHelper::map(\app\models\Proceso::find()->all(), 'id_proceso','proceso');
 ?>    
     
 <div class="panel panel-primary panel-filters">
@@ -41,17 +37,13 @@ $proceso = ArrayHelper::map(\app\models\Proceso::find()->all(), 'id_proceso','pr
     <div class="panel-body" id="filtromatriculas">
         <div class="row" >
             <?= $formulario->field($form, "placa")->input("search") ?>                       
-            <?= $formulario->field($form, 'id_proceso')->dropDownList($proceso,['prompt' => 'Seleccione...' ]) ?>
-            <?= $formulario->field($form,'fecha_enviado')->widget(DatePicker::className(),['name' => 'check_issue_date',
-                'value' => date('d-m-Y', strtotime('+2 days')),
-                'options' => ['placeholder' => 'Seleccione una fecha ...'],
-                'pluginOptions' => [
-                    'format' => 'yyyy-mm-dd',
-                    'todayHighlight' => true]]) ?>                 
+            <?= $formulario->field($form, "email")->input("search") ?>                       
+            <?= $formulario->field($form, "nombres")->input("search") ?>                       
+            <?= $formulario->field($form, "apellidos")->input("search") ?>                       
         </div>        
         <div class="panel-footer text-right">
             <?= Html::submitButton("Buscar", ["class" => "btn btn-primary"]) ?>
-            <a align="right" href="<?= Url::toRoute("reporte/index") ?>" class="btn btn-primary">Actualizar</a>
+            <a align="right" href="<?= Url::toRoute("cliente/index") ?>" class="btn btn-primary">Actualizar</a>
         </div>
     </div>
 </div>
@@ -63,38 +55,21 @@ $proceso = ArrayHelper::map(\app\models\Proceso::find()->all(), 'id_proceso','pr
             <tr>
                 <th scope="col">Id</th>                                
                 <th scope="col">Cliente</th>                                                
-                <th scope="col">Proceso</th>
-                <th scope="col">Fecha Proceso</th>
-                <th scope="col">Tema</th>
-                <th scope="col">Mensaje</th>
+                <th scope="col">Email</th>
                 <th scope="col">Placa</th>
+                <th scope="col">Telefono 1</th>                
+                <th scope="col">Dirección 1</th>                
             </tr>
         </thead>
         <tbody>
             <?php foreach ($model as $val): ?>
                 <tr>                    
-                    <th scope="row"><?= $val->id_reporte ?></th>                
-                    <td><?= $val->cliente->nombre_completo ?></td>                                                                    
-                    <td><?= $val->proceso->proceso ?></td>
-                    <td><?= $val->fecha_enviado ?></td>
-                    <td><?= $val->tema ?></td>
-                    <td align="center">                        
-                        <?php echo Html::a('<span class="glyphicon glyphicon-eye-open"></span>',
-                            ['/reporte/ver','id' => $val->id_reporte],
-                            [
-                                'title' => 'Carta',
-                                'data-toggle'=>'modal',
-                                'data-target'=>'#carta'.$val->id_reporte,
-                            ]
-                        );
-                        ?>
-                        <div class="modal remote fade" id="carta<?= $val->id_reporte ?>">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content"></div>
-                            </div>
-                        </div>
-                    </td>
+                    <th scope="row"><?= $val->id_cliente ?></th>                
+                    <td><?= $val->nombre_completo ?></td>                                                                    
+                    <td><?= $val->email ?></td>
                     <td><?= $val->placa ?></td>
+                    <td><?= $val->telefono_1 ?></td>                                        
+                    <td><?= $val->direccion_1 ?></td>                    
                 </tr>
             </tbody>
 <?php endforeach; ?>

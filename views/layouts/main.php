@@ -42,11 +42,12 @@ if (!Yii::$app->user->isGuest) {
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-center'],
         'items' => [
-            //['label' => 'Inicio', 'url' => ['/site/index']],                        
+            ['label' => 'Inicio', 'url' => ['/site/index']],                        
             [
                 'label' => 'Administracion',
                 'items' => [
-                    ['label' => 'Proceso', 'url' => ['/proceso/index']],                    
+                    ['label' => 'Proceso', 'url' => ['/proceso/index']],
+                    ['label' => 'Cliente', 'url' => ['/cliente/index']],
                 ]
             ],
             [
@@ -55,12 +56,12 @@ if (!Yii::$app->user->isGuest) {
                     ['label' => 'Reporte', 'url' => ['/reporte/index']],                    
                 ]
             ],                        
-            /*[                
+            [                
                 'label' => 'Configuración',
                 'items' => [
                     ['label' => 'Usuarios', 'url' => ['/site/usuarios']],                    
                 ],                
-            ]*/
+            ]
         ],
     ]);
     }
@@ -68,13 +69,20 @@ if (!Yii::$app->user->isGuest) {
         echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-center'],
         'items' => [
-            //['label' => 'Inicio', 'url' => ['/site/index']],                                    
+            ['label' => 'Inicio', 'url' => ['/site/index']],                        
+            [
+                'label' => 'Administracion',
+                'items' => [
+                    ['label' => 'Proceso', 'url' => ['/proceso/index']],
+                    ['label' => 'Cliente', 'url' => ['/cliente/index']],
+                ]
+            ],
             [
                 'label' => 'Utilidades',
                 'items' => [
                     ['label' => 'Reporte', 'url' => ['/reporte/index']],                    
                 ]
-            ],
+            ],                        
             /*[                
                 'label' => 'Configuración',
                 'items' => [

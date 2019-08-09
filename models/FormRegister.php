@@ -32,14 +32,12 @@ class FormRegister extends model{
 
     public function email_existe($attribute, $params)
     {
-
-        //Buscar el email en la tabla
-        $table = Users::find()->where("email=:email", [":email" => $this->email]);
-
-        //Si el email existe mostrar el error
+        //Buscar el proceso en la tabla
+        $table = Users::find()->where("email=:email", [":email" => $this->email])->andWhere("username!=:username", [':username' => $this->username]);
+        //Si el proceso existe mostrar el error
         if ($table->count() == 1)
         {
-            $this->addError($attribute, "El email seleccionado existe");
+            $this->addError($attribute, "El email ya existe ".$this->email);
         }
     }
 
@@ -58,7 +56,7 @@ class FormRegister extends model{
     public function attributeLabels()
     {
         return [
-            'username' => 'Identificacion:',
+            'username' => 'Usuario:',
             'email' => 'Email:',
             'password' => 'Clave:',
             'password_repeat' => 'Confirmar Clave:',            

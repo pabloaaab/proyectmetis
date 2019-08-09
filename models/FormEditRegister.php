@@ -7,7 +7,7 @@ use app\models\Users;
 
 class FormEditRegister extends model{
 
-    public $codusuario;
+    public $id;
     public $username;
     public $nombrecompleto;
     public $role;    
@@ -21,7 +21,7 @@ class FormEditRegister extends model{
             [['username', 'email', 'nombrecompleto','role','activo'], 'required', 'message' => 'Campo requerido'],
             ['username', 'match', 'pattern' => "/^.{3,50}$/", 'message' => 'Mínimo 3 y máximo 30 caracteres'],
             ['username', 'match', 'pattern' => "/^[0-9a-z]+$/i", 'message' => 'Sólo se aceptan letras y números'],
-            ['username', 'usuario_existe'],
+            ['username', 'username_existe'],
             
             ['nombrecompleto', 'string'],
             ['fechacreacion', 'safe'],
@@ -34,7 +34,7 @@ class FormEditRegister extends model{
     public function attributeLabels()
     {
         return [
-            'username' => 'Identificacion:',
+            'username' => 'Usuario:',
             'nombrecompleto' => 'Nombre:',
             'role' => 'Tipo Usuario:',            
             'email' => 'Email:',
@@ -45,22 +45,20 @@ class FormEditRegister extends model{
 
     public function email_existe($attribute, $params)
     {
-
-        //Buscar el email en la tabla
-        //$table = Users::find()->where("emailusuario=:emailusuario", [":emailusuario" => $this->emailusuario]);
-        $table = Users::find()->where("email=:email", [":email" => $this->email])->andWhere("username!=:username", [':username' => $this->username]);
-        //Si el email existe mostrar el error
+        //Buscar el proceso en la tabla
+        $table = Users::find()->where("email=:email", [":email" => $this->email])->andWhere("id!=:id", [':id' => $this->id]);
+        //Si el proceso existe mostrar el error
         if ($table->count() == 1)
         {
-            $this->addError($attribute, "El email seleccionado existe");
+            $this->addError($attribute, "El email ya existe ".$this->email);
         }
     }
 
-    public function usuario_existe($attribute, $params)
+    public function username_existe($attribute, $params)
     {
-        //Buscar el usuario en la tabla
-        //$table = Users::find()->where("username=:username", [":username" => $this->username]);
-        $table = Users::find()->where("username=:username", [":username" => $this->username])->andWhere("fechacreacion!=:fechacreacion", [':fechacreacion' => $this->fechacreacion]);
+        //Buscar el username en la tabla
+        $table = Users::find()->where("username=:username", [":username" => $this->username]);
+
         //Si el username existe mostrar el error
         if ($table->count() == 1)
         {
