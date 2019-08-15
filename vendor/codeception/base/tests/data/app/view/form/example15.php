@@ -1,5 +1,5 @@
 <html>
-    <title>My Application</title>
+    <title>Beautyice</title>
 <body>
 <form method="POST" action="/form/complex" accept-charset="UTF-8" role="form" class="crud-form big-bottom">
     <fieldset>

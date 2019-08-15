@@ -23,6 +23,7 @@ if (mysqli_connect_errno()) {
     exit();
 }
 
+
 //
 $fecha = date('Y-m-d');
 $fecha_int = strtotime($fecha);
@@ -63,37 +64,25 @@ AND x2_list_items.sending = 0
 AND x2_actions.complete = 'yes'
 GROUP BY x2_list_items.contactId";
 
+
 $resultado = mysqli_query($enlace,$consulta) or die ("error consulta select $consulta");
 
 /* obtener el array asociativo */
 while ($obj = mysqli_fetch_object($resultado)) {
     //se busca el cliente si esta registrado en la plataforma de reportes
-    $cliente = "select id_cliente from cliente where placa = '$obj->placa' ";
+    $cliente = "select id_cliente from cliente where id_cliente = '$obj->cliente_enviado' ";
     $result = mysqli_query($enlace2, $cliente) or die ("error consulta verificar si existe cliente $cliente");
     $reg = mysqli_num_rows($result);
-    if ($reg == 0){ //insercion
+    if ($reg == 0){
         //se inserta el cliente en el caso que no este registrado en la plataforma de reportes
-        $insertcliente = "insert into cliente(nombre_id,nombres,apellidos,nombre_completo,compania,telefono_1,telefono_2,email,pagina,direccion_1,direccion_2,ciudad,departamento,pais,placa)"
-                . "       values ('$obj->nombre_completo','$obj->nombres','$obj->apellidos','$obj->nombre_completo','$obj->campania','$obj->telefono_1','$obj->telefono_2','$obj->email','$obj->pagina','$obj->direccion_1','$obj->direccion_2','$obj->ciudad','$obj->departamento','$obj->pais','$obj->placa')";
+        $insertcliente = "insert into cliente(id_cliente,nombre_id,nombres,apellidos,nombre_completo,compania,telefono_1,telefono_2,email,pagina,direccion_1,direccion_2,ciudad,departamento,pais,placa)"
+                . "       values ('$obj->cliente_enviado','$obj->nombre_completo','$obj->nombres','$obj->apellidos','$obj->nombre_completo','','$obj->telefono_1','$obj->telefono_2','$obj->email','$obj->pagina','$obj->direccion_1','$obj->direccion_2','$obj->ciudad','$obj->departamento','$obj->pais','$obj->placa')";
         $resuult = mysqli_query($enlace2, $insertcliente) or die ("error consulta insercion cliente $insertcliente");
-        //se consulta el consecutivo creado del nuevo cliente
-        $clientenuevo = "select id_cliente from cliente where placa = '$obj->placa' ";
-        $result = mysqli_query($enlace2, $clientenuevo) or die ("error consulta verificar le consecutivo de la placa $clientenuevo");
-        $datos = mysqli_fetch_object($result);
-        //se inserta los registros de las notificaciones enviadas en la plataforma de reportes
-        $consultainsert = "insert into reporte (id_cliente,id_proceso,id_campania,campania,tema,mensaje,email_enviado,fecha_enviado,placa)"
-                . "        values ('$datos->id_cliente','1','$obj->id_campania','$obj->campania','$obj->tema','$obj->mensaje','$obj->email_enviado','$obj->fecha_envio','$obj->placa')";
-        $resuult = mysqli_query($enlace2, $consultainsert) or die ("error consulta insercion  reporte $consultainsert");
-    }else{ // modificacion
-        $editcliente = "update cliente set nombre_id = '$obj->nombre_completo', nombres = '$obj->nombres', apellidos = '$obj->apellidos', nombre_completo = '$obj->nombre_completo', campania = '$obj->'campania', telefono_1 = '$obj->telefono_1', telefono_2 = '$obj->telefono_2', email = '$obj->email', pagina = '$obj->pagina', direccion_1 = '$obj->direccion_1', direccion_2 = '$obj->direccion_2', ciudad = '$obj->ciudad', departamento = '$obj->departamento', pais = '$obj->pais '"
-                . " where placa = $clientenuevo->placa";
-        $resuult = mysqli_query($enlace2, $editcliente) or die ("error consulta edicion cliente $edittcliente");
-        //se inserta los registros de las notificaciones enviadas en la plataforma de reportes edicion
-        $consultainsert = "insert into reporte (id_cliente,id_proceso,id_campania,campania,tema,mensaje,email_enviado,fecha_enviado,placa)"
-                . "        values ('$cliente->id_cliente','1','$obj->id_campania','$obj->campania','$obj->tema','$obj->mensaje','$obj->email_enviado','$obj->fecha_envio','$obj->placa')";
-        $resuult = mysqli_query($enlace2, $consultainsert) or die ("error consulta insercion  reporte $consultainsert");
     }
-
+    //se inserta los registros de las notificaciones enviadas en la plataforma de reportes
+    $consultainsert = "insert into reporte (id_cliente,id_proceso,id_campania,campania,tema,mensaje,email_enviado,fecha_enviado,placa)"
+            . "        values ('$obj->cliente_enviado','1','$obj->id_campania','$obj->campania','$obj->tema','$obj->mensaje','$obj->email_enviado','$obj->fecha_envio','$obj->placa')";
+    $resuult = mysqli_query($enlace2, $consultainsert) or die ("error consulta insercion  reporte $consultainsert");
 }
 
 /* cerrar la conexión */
@@ -101,6 +90,7 @@ mysqli_close($enlace2);
 
 /* liberar el conjunto de resultados */
 mysqli_free_result($resultado);
+
 
 /* cerrar la conexión */
 mysqli_close($enlace);

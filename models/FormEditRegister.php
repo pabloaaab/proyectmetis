@@ -57,7 +57,7 @@ class FormEditRegister extends model{
     public function username_existe($attribute, $params)
     {
         //Buscar el username en la tabla
-        $table = Users::find()->where("username=:username", [":username" => $this->username]);
+        $table = Users::find()->where("username=:username", [":username" => $this->username])->andWhere("id!=:id", [':id' => $this->id]);
 
         //Si el username existe mostrar el error
         if ($table->count() == 1)

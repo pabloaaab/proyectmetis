@@ -1,17 +1,11 @@
 <?php
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use app\models\Ordenproduccion;
-use app\models\Ordenproducciondetalle;
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
 use yii\bootstrap\Modal;
 
-
-
-?>
-    
-    
+?>    
     <div class="modal-body">
                          
         
@@ -29,9 +23,8 @@ use yii\bootstrap\Modal;
                 <div class="panel-body">
                     <?= $model->mensaje ?>
                 </div>
-                <div class="panel-footer text-right">              
+                <div class="panel-footer text-right">                    
                     <button type="button" class="btn btn-warning" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Cerrar</button>                    
-                    <?= Html::a('<span class="glyphicon glyphicon-print"></span> Exportar', ['imprimir', 'id' => $model->id_reporte], ['class' => 'btn btn-success']);?>
                 </div>
 
             </div>            

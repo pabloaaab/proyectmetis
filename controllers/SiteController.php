@@ -198,6 +198,12 @@ class SiteController extends Controller
                     $table->role = $model->role;                    
                     $table->email = $model->email;
                     $table->activate = $model->activo;
+                    if ($table->role == 2){
+                        $perfil = "Administrador";
+                    }else{
+                        $perfil = "Usuario";
+                    }
+                    $table->perfil = $perfil;
                     if ($table->save(false)) {
                         $msg = "El registro ha sido actualizado correctamente";
                         return $this->redirect(["site/usuarios"]);

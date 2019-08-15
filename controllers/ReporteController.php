@@ -176,9 +176,25 @@ class ReporteController extends Controller {
         ]);
     }        
 
-    public function actionVer($id) {
+    public function actionCarta($id) {
         
         return $this->renderAjax('carta', [
+                    'model' => $this->findModel($id),                    
+        ]);
+    
+    }
+    
+    public function actionLlamada($id) {
+        
+        return $this->renderAjax('llamada', [
+                    'model' => $this->findModel($id),                    
+        ]);
+    
+    }
+    
+    public function actionSms($id) {
+        
+        return $this->renderAjax('sms', [
                     'model' => $this->findModel($id),                    
         ]);
     

@@ -67,6 +67,7 @@ $proceso = ArrayHelper::map(\app\models\Proceso::find()->all(), 'id_proceso','pr
                 <th scope="col">Fecha Proceso</th>
                 <th scope="col">Tema</th>
                 <th scope="col">Mensaje</th>
+                <th scope="col">Email / Llamada / Sms</th>
                 <th scope="col">Placa</th>
             </tr>
         </thead>
@@ -78,22 +79,65 @@ $proceso = ArrayHelper::map(\app\models\Proceso::find()->all(), 'id_proceso','pr
                     <td><?= $val->proceso->proceso ?></td>
                     <td><?= $val->fecha_enviado ?></td>
                     <td><?= $val->tema ?></td>
-                    <td align="center">                        
-                        <?php echo Html::a('<span class="glyphicon glyphicon-eye-open"></span>',
-                            ['/reporte/ver','id' => $val->id_reporte],
-                            [
-                                'title' => 'Carta',
-                                'data-toggle'=>'modal',
-                                'data-target'=>'#carta'.$val->id_reporte,
-                            ]
-                        );
-                        ?>
-                        <div class="modal remote fade" id="carta<?= $val->id_reporte ?>">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content"></div>
+                    <td align="center">
+                        <?php if ($val->id_proceso == 1){ // Carta ?>
+                            <?php echo Html::a('<span class="glyphicon glyphicon-eye-open"></span>',
+                                ['/reporte/carta','id' => $val->id_reporte],
+                                [
+                                    'title' => 'Carta',
+                                    'data-toggle'=>'modal',
+                                    'data-target'=>'#carta'.$val->id_reporte,
+                                ]
+                            );
+                            ?>
+                            <div class="modal remote fade" id="carta<?= $val->id_reporte ?>">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content"></div>
+                                </div>
                             </div>
-                        </div>
+                        <?php } ?>
+                        <?php if ($val->id_proceso == 2){ // Llamada ?>
+                            <?php echo Html::a('<span class="glyphicon glyphicon-eye-open"></span>',
+                                ['/reporte/llamada','id' => $val->id_reporte],
+                                [
+                                    'title' => 'Llamada',
+                                    'data-toggle'=>'modal',
+                                    'data-target'=>'#llamada'.$val->id_reporte,
+                                ]
+                            );
+                            ?>
+                            <div class="modal remote fade" id="llamada<?= $val->id_reporte ?>">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content"></div>
+                                </div>
+                            </div>
+                        <?php } ?>
+                        <?php if ($val->id_proceso == 3){ // Sms ?>
+                            <?php echo Html::a('<span class="glyphicon glyphicon-eye-open"></span>',
+                                ['/reporte/sms','id' => $val->id_reporte],
+                                [
+                                    'title' => 'Sms',
+                                    'data-toggle'=>'modal',
+                                    'data-target'=>'#sms'.$val->id_reporte,
+                                ]
+                            );
+                            ?>
+                            <div class="modal remote fade" id="sms<?= $val->id_reporte ?>">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content"></div>
+                                </div>
+                            </div>
+                        <?php } ?>
                     </td>
+                    <?php if ($val->id_proceso == 1){ ?>
+                        <td><?= $val->email_enviado ?></td>
+                    <?php } ?>
+                    <?php if ($val->id_proceso == 2){ ?>
+                        <td><?= $val->llamada_enviado ?></td>
+                    <?php } ?>
+                    <?php if ($val->id_proceso == 3){ ?>
+                        <td><?= $val->sms_enviado ?></td>
+                    <?php } ?>    
                     <td><?= $val->placa ?></td>
                 </tr>
             </tbody>
