@@ -57,7 +57,7 @@ INNER JOIN x2_contacts ON x2_list_items.contactId = x2_contacts.id
 INNER JOIN x2_campaigns ON x2_list_items.listId = x2_campaigns.id
 INNER JOIN x2_actions ON x2_list_items.contactId = x2_actions.associationId
 INNER JOIN x2_action_text ON x2_actions.id = x2_action_text.id
-WHERE x2_list_items.listId = 13
+WHERE FROM_UNIXTIME(x2_list_items.sent,'%Y-%m-%d %H:%i:%s') LIKE '%date('Y-m-d')%'
 AND x2_list_items.sent <> 0
 AND x2_list_items.sending = 0
 AND x2_actions.complete = 'yes'
