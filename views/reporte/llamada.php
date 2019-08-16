@@ -20,7 +20,7 @@ use yii\bootstrap\Modal;
             <div class="panel panel-success ">
                 
                 <div class="panel-body">
-                    <?= $model->mensaje ?>
+                    <?php echo "<a href='$model->mensaje', target= '_blank'>"; echo $model->mensaje."</a>"; ?>
                 </div>
                 <div class="panel-footer text-right">                    
                     <button type="button" class="btn btn-warning" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Cerrar</button>                    
