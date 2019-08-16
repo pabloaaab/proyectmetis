@@ -64,7 +64,8 @@ AND x2_actions.complete = 'yes'
 GROUP BY x2_list_items.contactId";
 
 $resultado = mysqli_query($enlace,$consulta) or die ("error consulta select $consulta");
-
+$nro_notif_a_enviar = mysqli_num_rows($resultado);
+$nro_notif_enviadas = 0;
 /* obtener el array asociativo */
 while ($obj = mysqli_fetch_object($resultado)) {
     //se busca el cliente si esta registrado en la plataforma de reportes
@@ -94,8 +95,39 @@ while ($obj = mysqli_fetch_object($resultado)) {
                 . "        values ('$datos->id_cliente','1','$obj->id_campania','$obj->campania','$obj->tema','$obj->mensaje','$obj->email_enviado','$obj->fecha_envio','$obj->placa')";
         $resuult = mysqli_query($enlace2, $consultainsert) or die ("error consulta insercion  reporte $consultainsert");
     }
-
+    $nro_notif_enviadas = $nro_notif_enviadas + 1;
 }
+/*if ($nro_notif_a_enviar == 0 or $nro_notif_a_enviar == null){
+    ini_set( 'display_errors', 1 );
+    error_reporting( E_ALL );
+    $from = "From: Plataforma Notificaciones<aranzatus21@gmail.com>";
+    $to = "<paul6126@hotmail.com>";
+    $subject = "Envios de cartas exportadas a la plataforma de notificaciones";
+    $message = "EL día ". $fecha . " No se registraron cartas a exportar \r\n";
+    $headers = "From:" . $from;
+    mail($to,$subject,$message, $headers);
+}
+if ($nro_notif_a_enviar == $nro_notif_enviadas){
+    ini_set( 'display_errors', 1 );
+    error_reporting( E_ALL );
+    $from = "From: Plataforma Notificaciones<aranzatus21@gmail.com>";
+    $to = "<paul6126@hotmail.com>";
+    $subject = "Envios de cartas exportadas a la plataforma de notificaciones";
+    $message = "EL día ". $fecha . " Se exportaron " . $nro_notif_enviadas . " de " . $nro_notif_a_enviar . " cartas a la plataforma de notificaciones  \r\n";
+    $headers = "From:" . $from;
+    mail($to,$subject,$message, $headers);    
+}
+
+if ($nro_notif_a_enviar <> $nro_notif_enviadas){
+    ini_set( 'display_errors', 1 );
+    error_reporting( E_ALL );
+    $from = "From: Plataforma Notificaciones<aranzatus21@gmail.com>";
+    $to = "<paul6126@hotmail.com>";
+    $subject = "Envios de cartas exportadas a la plataforma de notificaciones";
+    $message = "EL día ". $fecha . " Hubieron problemas al enviar las notificaciones.  \r\n";
+    $headers = "From:" . $from;
+    mail($to,$subject,$message, $headers);    
+}*/
 
 /* cerrar la conexión */
 mysqli_close($enlace2);
