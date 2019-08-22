@@ -51,9 +51,9 @@ if (!Yii::$app->user->isGuest) {
                 ]
             ],
             [
-                'label' => 'Utilidades',
+                'label' => 'Vitacora',
                 'items' => [
-                    ['label' => 'Reporte', 'url' => ['/reporte/index']],                    
+                    ['label' => 'Consulta', 'url' => ['/reporte/index']],                    
                 ]
             ],                        
             [                
@@ -70,17 +70,17 @@ if (!Yii::$app->user->isGuest) {
         'options' => ['class' => 'navbar-nav navbar-center'],
         'items' => [
             ['label' => 'Inicio', 'url' => ['/site/index']],                        
-            [
+            /*[
                 'label' => 'Administracion',
                 'items' => [
                     ['label' => 'Proceso', 'url' => ['/proceso/index']],
                     ['label' => 'Cliente', 'url' => ['/cliente/index']],
                 ]
-            ],
+            ],*/
             [
-                'label' => 'Utilidades',
+                'label' => 'Vitacora',
                 'items' => [
-                    ['label' => 'Reporte', 'url' => ['/reporte/index']],                    
+                    ['label' => 'Consulta', 'url' => ['/reporte/index']],                    
                 ]
             ],                        
             /*[                

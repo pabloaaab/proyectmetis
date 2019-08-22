@@ -5,11 +5,11 @@
 $this->title = 'Metis';
 ?>
 <div class="site-index">
-
+    
     <div class="jumbotron">
-        <img src="images/logowillis.jfif" align="center" width="350px" height="190px">        
-        <img src="images/logometis.png" align="center" width="350px" height="190px">        
-        <h1>Bienvenidos!</h1>
+        <h1>Registros de contactos a cliente</h1>
+        <img src="images/logowillis.jfif" align="center" width="25%" >        
+        <img src="images/logometis.png" align="center" width="25%" >                
     </div>
 
     <div class="body-content">

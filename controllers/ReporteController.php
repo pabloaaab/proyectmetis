@@ -30,16 +30,19 @@ class ReporteController extends Controller {
         if (!Yii::$app->user->isGuest) {
             $form = new FormFiltroReporte;            
             $placa = null;
-            $fecha_enviado = null;
+            $fecha_enviado_desde = null;
+            $fecha_enviado_hasta = null;
             $id_proceso = null;            
             if ($form->load(Yii::$app->request->get())) {
                 if ($form->validate()) {                    
                     $placa = Html::encode($form->placa);
-                    $fecha_enviado = Html::encode($form->fecha_enviado);
+                    $fecha_enviado_desde = Html::encode($form->fecha_enviado_desde);
+                    $fecha_enviado_hasta = Html::encode($form->fecha_enviado_hasta);
                     $id_proceso = Html::encode($form->id_proceso);                                        
                     $table = Reporte::find()                                                        
                             ->andFilterWhere(['like', 'placa', $placa])
-                            ->andFilterWhere(['like', 'fecha_enviado', $fecha_enviado])
+                            ->andFilterWhere(['>=', 'fecha_enviado', $fecha_enviado_desde.' 00:00:00'])
+                            ->andFilterWhere(['<=', 'fecha_enviado', $fecha_enviado_hasta.' 23:59:59'])
                             ->andFilterWhere(['like', 'id_proceso', $id_proceso])                            
                             ->orderBy('fecha_enviado desc');
                     $count = clone $table;

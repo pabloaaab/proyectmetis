@@ -11,7 +11,7 @@ use kartik\date\DatePicker;
 use yii\helpers\ArrayHelper;
 use moonland\phpexcel\Excel;
 
-$this->title = 'Reporte Notificaciones';
+$this->title = 'Registros Contactos';
 ?>
 
 <h1>Reporte Notificaciones</h1>
@@ -42,16 +42,22 @@ $proceso = ArrayHelper::map(\app\models\Proceso::find()->all(), 'id_proceso','pr
         <div class="row" >
             <?= $formulario->field($form, "placa")->input("search") ?>                       
             <?= $formulario->field($form, 'id_proceso')->dropDownList($proceso,['prompt' => 'Seleccione...' ]) ?>
-            <?= $formulario->field($form,'fecha_enviado')->widget(DatePicker::className(),['name' => 'check_issue_date',
+            <?= $formulario->field($form,'fecha_enviado_desde')->widget(DatePicker::className(),['name' => 'check_issue_date',
                 'value' => date('d-m-Y', strtotime('+2 days')),
                 'options' => ['placeholder' => 'Seleccione una fecha ...'],
                 'pluginOptions' => [
                     'format' => 'yyyy-mm-dd',
-                    'todayHighlight' => true]]) ?>                 
+                    'todayHighlight' => true]]) ?>  
+            <?= $formulario->field($form,'fecha_enviado_hasta')->widget(DatePicker::className(),['name' => 'check_issue_date',
+                'value' => date('d-m-Y', strtotime('+2 days')),
+                'options' => ['placeholder' => 'Seleccione una fecha ...'],
+                'pluginOptions' => [
+                    'format' => 'yyyy-mm-dd',
+                    'todayHighlight' => true]]) ?>  
         </div>        
         <div class="panel-footer text-right">
             <?= Html::submitButton("Buscar", ["class" => "btn btn-primary"]) ?>
-            <a align="right" href="<?= Url::toRoute("reporte/index") ?>" class="btn btn-primary">Actualizar</a>
+            <a align="right" href="<?= Url::toRoute("reporte/index") ?>" class="btn btn-primary">Limpiar</a>
         </div>
     </div>
 </div>
