@@ -14,7 +14,7 @@ use moonland\phpexcel\Excel;
 $this->title = 'Registros Contactos';
 ?>
 
-<h1>Reporte Notificaciones</h1>
+<h1>Registros Contactos</h1>
 <?php $formulario = ActiveForm::begin([
     "method" => "get",
     "action" => Url::toRoute("reporte/index"),
