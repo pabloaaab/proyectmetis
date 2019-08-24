@@ -38,12 +38,19 @@ class ReporteController extends Controller {
                     $placa = Html::encode($form->placa);
                     $fecha_enviado_desde = Html::encode($form->fecha_enviado_desde);
                     $fecha_enviado_hasta = Html::encode($form->fecha_enviado_hasta);
-                    $id_proceso = Html::encode($form->id_proceso);                                        
+                    $id_proceso = Html::encode($form->id_proceso);
+                    if ($fecha_enviado_desde <> null or $fecha_enviado_hasta <> null){
+                        $dato1 = $fecha_enviado_desde.' 00:00:00';
+                        $dato2 = $fecha_enviado_desde.' 23:59:59';
+                    }else{
+                        $dato1 = null;
+                        $dato2 = null;
+                    }
                     $table = Reporte::find()                                                        
                             ->andFilterWhere(['like', 'placa', $placa])
-                            ->andFilterWhere(['>=', 'fecha_enviado', $fecha_enviado_desde.' 00:00:00'])
-                            ->andFilterWhere(['<=', 'fecha_enviado', $fecha_enviado_hasta.' 23:59:59'])
-                            ->andFilterWhere(['like', 'id_proceso', $id_proceso])                            
+                            ->andFilterWhere(['>=', 'fecha_enviado', $dato1])
+                            ->andFilterWhere(['<=', 'fecha_enviado', $dato2])
+                            ->andFilterWhere(['=', 'id_proceso', $id_proceso])                            
                             ->orderBy('fecha_enviado desc');
                     $count = clone $table;
                     $pages = new Pagination([
@@ -61,7 +68,8 @@ class ReporteController extends Controller {
                 if(isset($_POST['excel'])){
                     $table = Reporte::find()                                                        
                             ->andFilterWhere(['like', 'placa', $placa])
-                            ->andFilterWhere(['like', 'fecha_enviado', $fecha_enviado])
+                            ->andFilterWhere(['>=', 'fecha_enviado', $dato1])
+                            ->andFilterWhere(['<=', 'fecha_enviado', $dato2])
                             ->andFilterWhere(['like', 'id_proceso', $id_proceso])                            
                             ->orderBy('fecha_enviado desc');
                     
