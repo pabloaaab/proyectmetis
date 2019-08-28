@@ -78,7 +78,7 @@ if (!Yii::$app->user->isGuest) {
                 ]
             ],*/
             [
-                'label' => 'Bitacora',
+                'label' => 'Bitacora', 
                 'items' => [
                     ['label' => 'Consulta', 'url' => ['/reporte/index']],                    
                 ]
