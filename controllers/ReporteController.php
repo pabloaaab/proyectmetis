@@ -41,7 +41,7 @@ class ReporteController extends Controller {
                     $id_proceso = Html::encode($form->id_proceso);
                     if ($fecha_enviado_desde <> null or $fecha_enviado_hasta <> null){
                         $dato1 = $fecha_enviado_desde.' 00:00:00';
-                        $dato2 = $fecha_enviado_desde.' 23:59:59';
+                        $dato2 = $fecha_enviado_hasta.' 23:59:59';
                     }else{
                         $dato1 = null;
                         $dato2 = null;
