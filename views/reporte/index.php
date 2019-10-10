@@ -71,10 +71,10 @@ $proceso = ArrayHelper::map(\app\models\Proceso::find()->all(), 'id_proceso','pr
                 <th scope="col">Cliente</th>                                                
                 <th scope="col">Proceso</th>
                 <th scope="col">Fecha Proceso</th>
-                <th scope="col">Tema</th>
-                <th scope="col">Mensaje</th>
+                <th scope="col">Tema</th>                
                 <th scope="col">Email / Llamada / Sms</th>
                 <th scope="col">Placa</th>
+                <th scope="col">Mensaje</th>
             </tr>
         </thead>
         <tbody>
@@ -84,18 +84,28 @@ $proceso = ArrayHelper::map(\app\models\Proceso::find()->all(), 'id_proceso','pr
                     <td><?= $val->cliente->nombre_completo ?></td>                                                                    
                     <td><?= $val->proceso->proceso ?></td>
                     <td><?= $val->fecha_enviado ?></td>
-                    <td><?= $val->tema ?></td>
+                    <td><?= $val->tema ?></td>                    
+                    <?php if ($val->id_proceso == 1){ ?>
+                        <td><?= $val->email_enviado ?></td>
+                    <?php } ?>
+                    <?php if ($val->id_proceso == 2){ ?>
+                        <td><?= $val->llamada_enviado ?></td>
+                    <?php } ?>
+                    <?php if ($val->id_proceso == 3){ ?>
+                        <td><?= $val->sms_enviado ?></td>
+                    <?php } ?>    
+                    <td><?= $val->placa ?></td>
                     <td align="center">
                         <?php if ($val->id_proceso == 1){ // Carta ?>
-                            <?php echo Html::a('<span class="glyphicon glyphicon-eye-open"></span>',
+                            <?php echo Html::a('<span class="glyphicon glyphicon-eye-open" style="font-size:25px;"></span>',
                                 ['/reporte/carta','id' => $val->id_reporte],
                                 [
                                     'title' => 'Carta',
                                     'data-toggle'=>'modal',
                                     'data-target'=>'#carta'.$val->id_reporte,
                                 ]
-                            );
-                            ?>
+                            );                            
+                            ?>                        
                             <div class="modal remote fade" id="carta<?= $val->id_reporte ?>">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content"></div>
@@ -103,7 +113,7 @@ $proceso = ArrayHelper::map(\app\models\Proceso::find()->all(), 'id_proceso','pr
                             </div>
                         <?php } ?>
                         <?php if ($val->id_proceso == 2){ // Llamada ?>
-                            <?php echo Html::a('<span class="glyphicon glyphicon-eye-open"></span>',
+                            <?php echo Html::a('<span class="glyphicon glyphicon-eye-open" style="font-size:25px;"></span>',
                                 ['/reporte/llamada','id' => $val->id_reporte],
                                 [
                                     'title' => 'Llamada',
@@ -119,7 +129,7 @@ $proceso = ArrayHelper::map(\app\models\Proceso::find()->all(), 'id_proceso','pr
                             </div>
                         <?php } ?>
                         <?php if ($val->id_proceso == 3){ // Sms ?>
-                            <?php echo Html::a('<span class="glyphicon glyphicon-eye-open"></span>',
+                            <?php echo Html::a('<span class="glyphicon glyphicon-eye-open" style="font-size:25px;"></span>',
                                 ['/reporte/sms','id' => $val->id_reporte],
                                 [
                                     'title' => 'Sms',
@@ -135,16 +145,6 @@ $proceso = ArrayHelper::map(\app\models\Proceso::find()->all(), 'id_proceso','pr
                             </div>
                         <?php } ?>
                     </td>
-                    <?php if ($val->id_proceso == 1){ ?>
-                        <td><?= $val->email_enviado ?></td>
-                    <?php } ?>
-                    <?php if ($val->id_proceso == 2){ ?>
-                        <td><?= $val->llamada_enviado ?></td>
-                    <?php } ?>
-                    <?php if ($val->id_proceso == 3){ ?>
-                        <td><?= $val->sms_enviado ?></td>
-                    <?php } ?>    
-                    <td><?= $val->placa ?></td>
                 </tr>
             </tbody>
 <?php endforeach; ?>
