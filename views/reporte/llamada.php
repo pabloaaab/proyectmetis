@@ -19,8 +19,8 @@ use yii\bootstrap\Modal;
         <div class="table table-responsive">
             <div class="panel panel-success ">
                 
-                <div class="panel-body">
-                    <?php echo "<a href='$model->mensaje', raw='1' target= '_blank'>"; echo $model->mensaje."</a>"; ?>
+                <div class="panel-body">                    
+                    <a align="right" href="<?= Url::toRoute(["reporte/descargarllamada", "id" => $model->mensaje]) ?>" class="link"><?= $model->mensaje ?></a>
                 </div>
                 <div class="panel-footer text-right">                    
                     <button type="button" class="btn btn-warning" data-dismiss="modal"><span class='glyphicon glyphicon-remove'></span> Cerrar</button>                    

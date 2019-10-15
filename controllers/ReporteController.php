@@ -210,5 +210,14 @@ class ReporteController extends Controller {
         ]);
     
     }
+    
+    public function actionDescargarllamada($id){
+        
+        $file = file($id);
+        $base = basename($id);
+        $file2 = implode("", $file);
+        header("Content-Type: application/octec-stream");
+        header("Content-Disposition: attachment; filename=$base");        
+    }
 
 }
