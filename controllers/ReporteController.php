@@ -23,7 +23,6 @@ use moonland\phpexcel\Excel;
 use PHPExcel;
 
 
-
 class ReporteController extends Controller {
 
     public function actionIndex() {
@@ -212,12 +211,74 @@ class ReporteController extends Controller {
     }
     
     public function actionDescargarllamada($id){
+      
+        $url = $id;
+        $start = curl_init();
+        curl_setopt($start, CURLOPT_URL, $url);
+        curl_setopt($start, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($start, CURLOPT_SSLVERSION, 3);
+        $file_data = curl_exec($start);
+        curl_close($start);
+        $file_path = 'images/' . uniqid() . '.WAV';
+        $nombre = basename($file_path);
+        $basename = substr($nombre, 0, strrpos($nombre, ".")); 
+        $ruta = 'images/';
+        $ruta2 = $ruta.$nombre;
+        $file = fopen($file_path, 'w+');
+        fputs($file, $file_data);
         
-        $file = file($id);
-        $base = basename($id);
-        $file2 = implode("", $file);
-        header("Content-Type: application/octec-stream");
-        header("Content-Disposition: attachment; filename=$base");        
+        if (!$this->downloadFile($ruta, $nombre, ["pdf", "txt", "docx","xlsx","jpg","png","WAV"]))
+            {
+                //Mensaje flash para mostrar el error
+                Yii::$app->getSession()->setFlash('error', 'Error en la descarga.');                
+            }
+                
+        fclose($file);
+        unlink($ruta2);
     }
+    
+    private function downloadFile($dir, $file, $extensions=[])
+    {
+        //Si el directorio existe
+        if (is_dir($dir))
+        {
+            //Ruta absoluta del archivo
+            $path = $dir.$file;
 
+            //Si el archivo existe
+            if (is_file($path))
+            {
+                //Obtener información del archivo
+                $file_info = pathinfo($path);
+                //Obtener la extensión del archivo
+                $extension = $file_info["extension"];
+
+                if (is_array($extensions))
+                {
+                    //Si el argumento $extensions es un array
+                    //Comprobar las extensiones permitidas
+                    foreach($extensions as $e)
+                    {
+                        //Si la extension es correcta
+                        if ($e === $extension)
+                        {
+                            //Procedemos a descargar el archivo
+                            // Definir headers
+                            $size = filesize($path);
+                            header("Content-Type: application/force-download");
+                            header("Content-Disposition: attachment; filename=$file");
+                            header("Content-Transfer-Encoding: binary");
+                            header("Content-Length: " . $size);
+                            // Descargar archivo
+                            readfile($path);
+                            //Correcto
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        //Ha ocurrido un error al descargar el archivo
+        return false;
+    }
 }
