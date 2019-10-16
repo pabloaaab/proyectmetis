@@ -219,7 +219,7 @@ class ReporteController extends Controller {
         curl_setopt($start, CURLOPT_SSLVERSION, 3);
         $file_data = curl_exec($start);
         curl_close($start);
-        $file_path = 'images/' . uniqid() . '.WAV';
+        $file_path = 'images/' . uniqid() . '.jgp';
         $nombre = basename($file_path);
         $basename = substr($nombre, 0, strrpos($nombre, ".")); 
         $ruta = 'images/';
