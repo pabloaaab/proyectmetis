@@ -210,18 +210,21 @@ class ReporteController extends Controller {
     
     }
     
-    public function actionDescargarllamada($id){
-      
-        $url = $id;
+    public function actionDescargarllamada($id){                     
+        
+        $url = $id;        
+        $timeout = 5000;        
         $start = curl_init();
         curl_setopt($start, CURLOPT_URL, $url);
-        curl_setopt($start, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($start, CURLOPT_SSLVERSION, 3);
+        curl_setopt($start, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($start, CURLOPT_SSLVERSION, 0);
+        
         $file_data = curl_exec($start);
+        $response = json_decode($file_data);
         curl_close($start);
-        $file_path = 'images/' . uniqid() . '.jpg';
-        $nombre = basename($file_path);
-        $basename = substr($nombre, 0, strrpos($nombre, ".")); 
+        $nombre = basename($url);
+        $file_path = 'images/' . $nombre;
+                
         $ruta = 'images/';
         $ruta2 = $ruta.$nombre;
         $file = fopen($file_path, 'w+');
@@ -235,7 +238,8 @@ class ReporteController extends Controller {
                 
         fclose($file);
         unlink($ruta2);
-    }
+    
+   }
     
     private function downloadFile($dir, $file, $extensions=[])
     {
