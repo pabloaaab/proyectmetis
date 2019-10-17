@@ -21,9 +21,21 @@ use yii\bootstrap\Modal;
                 
                 <div class="panel-body">                    
                     <a align="right" href="<?= Url::toRoute(["reporte/descargarllamada", "id" => $model->mensaje]) ?>" class="link"><?= $model->mensaje ?></a>
-                    
-<a href="download/MEDELLIN13-1567202214.1656 (3).WAV" download="Acme Documentation (ver. 2.0.1).WAV">Download Text</a>
-
+                    <?php
+                        //Link to download file...
+ $url = "http://192.168.0.13/grabaciones/salida/2019-08-30/MEDELLIN13-1567202214.1656.WAV";
+ $data = file_get_contents($url);
+$nombre = basename($url);
+ //save as?
+ $filename = 'images/'.$nombre;
+$ruta = 'images/';
+ //save the file...
+ $fh = fopen($filename,"w");
+ fwrite($fh,$data);
+ fclose($fh);
+                        
+                    ?>
+                    <a href="http://192.168.0.13/grabaciones/salida/2019-08-30/MEDELLIN13-1567202214.1656.WAV" download></a>
                 </div>
                 </div>
                 <div class="panel-footer text-right">                    
