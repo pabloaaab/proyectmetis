@@ -216,6 +216,8 @@ class ReporteController extends Controller {
         $timeout = 5000;        
         $start = curl_init();
         curl_setopt($start, CURLOPT_URL, $url);
+        curl_setopt($start, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        curl_setopt($start, CURLOPT_USERPWD, "root:s3tc0l0mb14"); //Your credentials goes here
         curl_setopt($start, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($start, CURLOPT_SSLVERSION, 0);
         
