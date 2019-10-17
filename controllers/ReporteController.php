@@ -217,12 +217,12 @@ class ReporteController extends Controller {
         $start = curl_init();
         curl_setopt($start, CURLOPT_URL, $url);
         curl_setopt($start, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        curl_setopt($start, CURLOPT_USERPWD, "root:s3tc0l0mb14"); //Your credentials goes here
+        
         curl_setopt($start, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($start, CURLOPT_SSLVERSION, 0);
         
         $file_data = curl_exec($start);
-        $response = json_decode($file_data);
+        
         curl_close($start);
         $nombre = basename($url);
         $file_path = 'images/' . $nombre;

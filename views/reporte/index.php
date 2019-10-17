@@ -144,8 +144,8 @@ $proceso = ArrayHelper::map(\app\models\Proceso::find()->all(), 'id_proceso','pr
                                 </div>
                             </div>
                         <?php } ?>
-                    </td>
-                </tr>
+                    </td>                    
+                </tr>                
             </tbody>
 <?php endforeach; ?>
     </table>        
@@ -153,7 +153,6 @@ $proceso = ArrayHelper::map(\app\models\Proceso::find()->all(), 'id_proceso','pr
         <?= LinkPager::widget(['pagination' => $pagination]) ?>
     </div>    
 </div>
-
 <?php $formulario->end() ?>
 
 <?php
