@@ -153,6 +153,7 @@ $proceso = ArrayHelper::map(\app\models\Proceso::find()->all(), 'id_proceso','pr
         <?= LinkPager::widget(['pagination' => $pagination]) ?>
     </div>    
 </div>
+
 <?php $formulario->end() ?>
 
 <?php

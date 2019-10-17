@@ -23,6 +23,7 @@ use yii\bootstrap\Modal;
                     <a align="right" href="<?= Url::toRoute(["reporte/descargarllamada", "id" => $model->mensaje]) ?>" class="link"><?= $model->mensaje ?></a>
                     
                     <a href="http://192.168.0.13/grabaciones/salida/2019-08-30/MEDELLIN13-1567202214.1656.WAV" download>aaaaaa</a>
+                    
                 </div>
                 </div>
                 <div class="panel-footer text-right">                    
