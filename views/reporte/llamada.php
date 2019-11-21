@@ -20,7 +20,7 @@ use yii\bootstrap\Modal;
             <div class="panel panel-success ">
                 
                 <div class="panel-body">                                        
-		    <a href="http://192.168.0.13/setcrm4/buscador/descarga.php?file=../../<?= substr($model->mensaje,20); ?>"><?= $model->mensaje?></a>                    
+		    <a href="http://200.13.243.123:7070/setcrm4/buscador/descarga.php?file=../../<?= substr($model->mensaje,20); ?>"><?= $model->mensaje?></a>                    
                 </div>
                 </div>
                 <div class="panel-footer text-right">                    
